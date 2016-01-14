@@ -1,14 +1,18 @@
 
 package org.usfirst.frc.team2815.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team2815.robot.commands.DriveWithArcadeOrTank;
 import org.usfirst.frc.team2815.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2815.robot.commands.ShootEdward;
 import org.usfirst.frc.team2815.robot.commands.TankDriveWithJoystick;
 import org.usfirst.frc.team2815.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2815.robot.subsystems.EdShooter;
 import org.usfirst.frc.team2815.robot.subsystems.ExampleSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,10 +30,15 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveTrain driveTrain;
-
+	public static EdShooter shoot;
     Command autonomousCommand;
-    Command tankDrive;
+    //Command tankDrive;
+    Command togDrive;
+    
+    Command fire;
     SendableChooser chooser;
+    SendableChooser toggDriveChooser;
+    CameraServer server;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,11 +47,21 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		driveTrain = new DriveTrain();
-		tankDrive = new TankDriveWithJoystick();
+		shoot = new EdShooter();
+		//tankDrive = new TankDriveWithJoystick();
+		togDrive = new DriveWithArcadeOrTank();
+		fire = new ShootEdward();
+		
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
+        
+        //chooser.addDefault("Default Auto", new ExampleCommand());
+
 //        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+        //SmartDashboard.putData("Auto mode", chooser);
+        server = CameraServer.getInstance();
+        server.setQuality(50);
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam0");
     }
 	
 	/**
@@ -97,7 +116,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-    	tankDrive.start();
+    	//tankDrive.start();
+    	togDrive.start();
+    	fire.start();
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
 

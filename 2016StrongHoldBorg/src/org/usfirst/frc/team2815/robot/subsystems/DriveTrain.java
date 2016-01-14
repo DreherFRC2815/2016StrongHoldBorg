@@ -14,9 +14,16 @@ public class DriveTrain extends Subsystem {
     // here. Call these from Commands.
 	Victor[] leftMotors = new Victor[2];
 	Victor[] rightMotors = new Victor[2];
+	
 	static double lTarget;
 	static double rTarget;
-	static final double ACCL=.1;
+
+	static double lActual;
+	static double rActual;
+	static final double ACCL=.05;
+	//set false to tankDrive, true to arcadeDrive
+	public static boolean driveTypeArcade;
+	public static boolean driveTypeTank;
 	
 	public DriveTrain(){
 		leftMotors[0] = new Victor(RobotMap.leftMotors[0]);
@@ -25,6 +32,10 @@ public class DriveTrain extends Subsystem {
 		rightMotors[1] = new Victor(RobotMap.rightMotors[1]);
 		rTarget = 0; 
 		lTarget = 0;
+		lActual = 0;
+		rActual = 0;
+		driveTypeArcade = false;
+		driveTypeTank = true;
 	}
 	public void setMotors(double LS, double RS){
 		leftMotors[0].set(LS);
@@ -34,22 +45,58 @@ public class DriveTrain extends Subsystem {
 		
 	}
 	public void tankDrive(double lSpeed, double rSpeed){
-		if(lTarget != lSpeed){
-			if(lTarget > lSpeed)
-				lTarget-=ACCL;
-			else if(lTarget < lSpeed)
-				lTarget+=ACCL;
+		if(lActual != lSpeed){
+			if(lActual > lSpeed)
+				lActual -= ACCL;
+			else if(lActual < lSpeed)
+				lActual += ACCL;
 		}
-		if(rTarget != rSpeed){
-			if(rTarget > rSpeed)
-				rTarget-=ACCL;
-			else if(rTarget < rSpeed)
-				rTarget+=ACCL;
+		if(rActual != rSpeed){
+			if(rActual > rSpeed)
+				rActual -= ACCL;
+			else if(rActual < rSpeed)
+				rActual += ACCL;
 		}
-		setMotors(lTarget,rTarget);
+		setMotors(lActual,rActual);
 	}
 	public void arcadeDrive(double speed, double turnVal){
 		
+		lTarget = speed + turnVal;
+		if(lTarget >= 1)
+			lTarget = .99;
+		rTarget = speed - turnVal;
+		if(rTarget >= 1)
+			rTarget = .99;
+		if(lTarget != lActual){
+			if(lActual > lTarget)
+				lActual -= ACCL;
+			if(lActual < lTarget)
+				lActual += ACCL;
+		}
+		if(rTarget != rActual){
+			if(rActual > rTarget)
+				rActual -= ACCL;
+			if(rActual < rTarget)
+				rActual += ACCL;
+		}
+		setMotors(lActual,rActual);
+	}
+	public void driveToggle(boolean buttonA, boolean buttonX, double lSpeed, 
+			double rSpeed, double turnValue){
+		if(buttonA){
+			driveTypeArcade = true;
+			driveTypeTank = false;
+		}
+		if(buttonX){
+			driveTypeArcade = false;
+			driveTypeTank = true;
+		}
+		if(driveTypeTank){
+			tankDrive(lSpeed, rSpeed);
+		}
+		if(driveTypeArcade){
+			arcadeDrive(lSpeed, turnValue);
+		}
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

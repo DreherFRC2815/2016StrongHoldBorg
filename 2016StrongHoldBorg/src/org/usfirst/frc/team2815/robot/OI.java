@@ -23,8 +23,18 @@ public class OI {
 	public double getRightXValue(){
 		return xbox.getRawAxis(4);
 	}
-	
-	
+	public boolean getAButton(){
+		return xbox.getRawButton(1);
+	}
+	public boolean getXButton(){
+		return xbox.getRawButton(3);
+	}
+	public double getRightTrigger(){
+		return xbox.getRawAxis(3);
+	}
+	public double getLeftTrigger(){
+		return xbox.getRawAxis(2);
+	}
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button

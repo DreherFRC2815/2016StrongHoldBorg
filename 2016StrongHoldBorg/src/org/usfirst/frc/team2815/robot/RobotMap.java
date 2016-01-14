@@ -17,5 +17,6 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 	public static int[] leftMotors = {0,1};
 	public static int[] rightMotors = {2,3};
+	public static int[] shooterMotors = {4,5};
 	
 }
