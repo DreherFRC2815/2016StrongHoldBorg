@@ -1,8 +1,10 @@
 package org.usfirst.frc.team2815.robot.commands;
 
 import org.usfirst.frc.team2815.robot.Robot;
+import org.usfirst.frc.team2815.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -20,8 +22,11 @@ public class ShootEdward extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    @SuppressWarnings("deprecation")
+	protected void execute() {
     	Robot.shoot.shoot(Robot.oi.getLeftTrigger(), Robot.oi.getRightTrigger());
+    	SmartDashboard.putDouble("Left Trigger", Robot.oi.getLeftTrigger());
+    	SmartDashboard.putDouble("Right Trigger", Robot.oi.getRightTrigger());
     }
 
     // Make this return true when this Command no longer needs to run execute()

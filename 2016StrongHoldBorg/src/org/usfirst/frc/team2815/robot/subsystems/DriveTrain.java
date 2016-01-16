@@ -2,7 +2,7 @@ package org.usfirst.frc.team2815.robot.subsystems;
 
 import org.usfirst.frc.team2815.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,8 +12,8 @@ public class DriveTrain extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	Victor[] leftMotors = new Victor[2];
-	Victor[] rightMotors = new Victor[2];
+	Talon[] leftMotors = new Talon[2];
+	Talon[] rightMotors = new Talon[2];
 	
 	static double lTarget;
 	static double rTarget;
@@ -26,10 +26,10 @@ public class DriveTrain extends Subsystem {
 	public static boolean driveTypeTank;
 	
 	public DriveTrain(){
-		leftMotors[0] = new Victor(RobotMap.leftMotors[0]);
-		leftMotors[1] = new Victor(RobotMap.leftMotors[1]);
-		rightMotors[0] = new Victor(RobotMap.rightMotors[0]);
-		rightMotors[1] = new Victor(RobotMap.rightMotors[1]);
+		leftMotors[0] = new Talon(RobotMap.leftMotors[0]);
+		leftMotors[1] = new Talon(RobotMap.leftMotors[1]);
+		rightMotors[0] = new Talon(RobotMap.rightMotors[0]);
+		rightMotors[1] = new Talon(RobotMap.rightMotors[1]);
 		rTarget = 0; 
 		lTarget = 0;
 		lActual = 0;

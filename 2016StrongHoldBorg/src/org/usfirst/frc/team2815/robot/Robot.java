@@ -33,11 +33,11 @@ public class Robot extends IterativeRobot {
 	public static EdShooter shoot;
     Command autonomousCommand;
     //Command tankDrive;
-    Command togDrive;
+    //Command togDrive;
+     Command fire;
     
-    Command fire;
-    SendableChooser chooser;
-    SendableChooser toggDriveChooser;
+    //SendableChooser chooser;
+    //SendableChooser toggDriveChooser;
     CameraServer server;
 
     /**
@@ -46,18 +46,19 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		driveTrain = new DriveTrain();
+		
+		//driveTrain = new DriveTrain();
 		shoot = new EdShooter();
+		
 		//tankDrive = new TankDriveWithJoystick();
-		togDrive = new DriveWithArcadeOrTank();
+		//togDrive = new DriveWithArcadeOrTank();
 		fire = new ShootEdward();
 		
-        chooser = new SendableChooser();
-        
+        //chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand());
-
-//        chooser.addObject("My Auto", new MyAutoCommand());
+		//chooser.addObject("My Auto", new MyAutoCommand());
         //SmartDashboard.putData("Auto mode", chooser);
+		
         server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
@@ -87,7 +88,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        //autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -116,8 +117,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+    	
     	//tankDrive.start();
-    	togDrive.start();
+    	//togDrive.start();
     	fire.start();
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
