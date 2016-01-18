@@ -24,7 +24,7 @@ public class ShootEdward extends Command {
     // Called repeatedly when this Command is scheduled to run
     @SuppressWarnings("deprecation")
 	protected void execute() {
-    	Robot.shoot.shoot(Robot.oi.getLeftTrigger(), Robot.oi.getRightTrigger());
+    	Robot.shoot.shoot(Robot.oi.getRightTrigger(), Robot.oi.getLeftTrigger());
     	SmartDashboard.putDouble("Left Trigger", Robot.oi.getLeftTrigger());
     	SmartDashboard.putDouble("Right Trigger", Robot.oi.getRightTrigger());
     }

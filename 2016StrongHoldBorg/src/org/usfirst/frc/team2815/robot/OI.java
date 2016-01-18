@@ -11,17 +11,30 @@ import org.usfirst.frc.team2815.robot.commands.ExampleCommand;
  */
 public class OI {
 	Joystick xbox = new Joystick(0);
+	Joystick flight = new Joystick(1);
 	
 	public double getLeftYValue(){
-		return xbox.getRawAxis(1);
+		if(Math.abs(xbox.getRawAxis(1))>=.01){
+			return xbox.getRawAxis(1);
+		}
+		else
+			return 0;
 	}
 	
 	public double getRightYValue(){
-		return xbox.getRawAxis(5);
+		if(Math.abs(xbox.getRawAxis(5))>=.01){
+			return xbox.getRawAxis(5);
+		}
+		else
+			return 0;
 	}
 	
 	public double getRightXValue(){
-		return xbox.getRawAxis(4);
+		if(Math.abs(xbox.getRawAxis(4))>=.01){
+			return xbox.getRawAxis(4);
+		}
+		else
+			return 0;
 	}
 	public boolean getAButton(){
 		return xbox.getRawButton(1);
@@ -34,6 +47,21 @@ public class OI {
 	}
 	public double getLeftTrigger(){
 		return xbox.getRawAxis(2);
+	}
+	public int getThePOV(){
+		return xbox.getPOV();
+	}
+	public boolean getFlight1(){
+		return flight.getRawButton(1);
+	}
+	public boolean getFlight2(){
+		return flight.getRawButton(2);
+	}
+	public boolean getFlight3(){
+		return flight.getRawButton(3);
+	}
+	public boolean getFlight4(){
+		return flight.getRawButton(4);
 	}
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.

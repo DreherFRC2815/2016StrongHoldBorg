@@ -23,12 +23,12 @@ public class EdShooter extends Subsystem {
 	
 	public void shoot(double inSpeed, double outSpeed){
 		if(outSpeed > inSpeed){
-			shootVictors[0].set(outSpeed*.99);
-			shootVictors[1].set(-1*outSpeed*.99);
+			shootVictors[0].set(-1*outSpeed);
+			shootVictors[1].set(-1*outSpeed);
 		}
 		else if(outSpeed < inSpeed){
-			shootVictors[0].set(-1*inSpeed*.99);
-			shootVictors[1].set(inSpeed*.99);
+			shootVictors[0].set(inSpeed);
+			shootVictors[1].set(inSpeed);
 		}
 		else{
 			shootVictors[0].set(0);

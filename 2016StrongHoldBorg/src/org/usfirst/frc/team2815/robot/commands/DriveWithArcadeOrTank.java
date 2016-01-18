@@ -22,12 +22,14 @@ public class DriveWithArcadeOrTank extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    @SuppressWarnings("deprecation")
+	protected void execute() {
     	Robot.driveTrain.driveToggle(Robot.oi.getAButton(), 
     			Robot.oi.getXButton(), Robot.oi.getLeftYValue(), 
     			Robot.oi.getRightYValue(), Robot.oi.getRightXValue());
     	SmartDashboard.putBoolean("Tank Drive", DriveTrain.driveTypeTank);
     	SmartDashboard.putBoolean("Arcade Drive", DriveTrain.driveTypeArcade);
+    	SmartDashboard.putInt("POV shtuff", Robot.oi.getThePOV());
     }
 
     // Make this return true when this Command no longer needs to run execute()
