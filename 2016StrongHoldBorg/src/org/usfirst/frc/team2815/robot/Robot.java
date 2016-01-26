@@ -1,19 +1,24 @@
 
 package org.usfirst.frc.team2815.robot;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team2815.robot.autocommands.LowBarDrive;
 import org.usfirst.frc.team2815.robot.commands.DriveWithArcadeOrTank;
 import org.usfirst.frc.team2815.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2815.robot.commands.OperateSolenoids;
 import org.usfirst.frc.team2815.robot.commands.ShootEdward;
 import org.usfirst.frc.team2815.robot.commands.TankDriveWithJoystick;
 import org.usfirst.frc.team2815.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2815.robot.subsystems.EdShooter;
 import org.usfirst.frc.team2815.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2815.robot.subsystems.Pnuematics;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,14 +34,19 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
+	//subsystem declaration
 	public static DriveTrain driveTrain;
 	public static EdShooter shoot;
+	public static Pnuematics pnuem;
+	//command declaration
     Command autonomousCommand;
     //Command tankDrive;
-    //Command togDrive;
-     Command fire;
-    
-    //SendableChooser chooser;
+    Command togDrive;
+    Command fire;
+    Command pistons;
+    //Miscellaneous
+    public static Accelerometer accel;
+    SendableChooser chooser;
     //SendableChooser toggDriveChooser;
     CameraServer server;
 
@@ -46,23 +56,28 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		
-		//driveTrain = new DriveTrain();
+		//subsystem instantiation
+		driveTrain = new DriveTrain();
 		shoot = new EdShooter();
-		
+		pnuem = new Pnuematics();
+		//command instantiation
 		//tankDrive = new TankDriveWithJoystick();
-		//togDrive = new DriveWithArcadeOrTank();
+		togDrive = new DriveWithArcadeOrTank();
 		fire = new ShootEdward();
+		autonomousCommand = new LowBarDrive();
 		
-        //chooser = new SendableChooser();
-        //chooser.addDefault("Default Auto", new ExampleCommand());
+		accel = new BuiltInAccelerometer(Accelerometer.Range.k4G);
+		
+		pistons = new OperateSolenoids();
+		//chooser = new SendableChooser();
+        //chooser.addDefault("Default Auto", new LowBarDrive());
 		//chooser.addObject("My Auto", new MyAutoCommand());
         //SmartDashboard.putData("Auto mode", chooser);
 		
-        server = CameraServer.getInstance();
-        server.setQuality(30);
+        //server = CameraServer.getInstance();
+        //server.setQuality(30);
         //the camera name (ex "cam0") can be found through the roborio web interface
-        server.startAutomaticCapture("cam0");
+        //server.startAutomaticCapture("cam0");
     }
 	
 	/**
@@ -88,16 +103,16 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        //autonomousCommand = (Command) chooser.getSelected();
+        //autonomousCommand = new LowBarDrive();
         
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+		/*String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
 		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
+			autonomousCommand = new LowBarDrive();
 			break;
 		case "Default Auto":
 		default:
-			autonomousCommand = new ExampleCommand();
+			autonomousCommand = new LowBarDrive();
 			break;
 		} */
     	
@@ -109,6 +124,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	
         Scheduler.getInstance().run();
     }
 
@@ -119,9 +135,12 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     	
     	//tankDrive.start();
+    	
     	//togDrive.start();
-    	fire.start();
-        if (autonomousCommand != null) autonomousCommand.cancel();
+    	pistons.start();
+    	if (autonomousCommand != null) autonomousCommand.cancel();
+    	//fire.start();
+        
     }
 
     /**

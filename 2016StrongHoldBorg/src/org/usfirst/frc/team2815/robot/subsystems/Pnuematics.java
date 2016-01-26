@@ -18,16 +18,16 @@ public class Pnuematics extends Subsystem {
 	boolean state2;
 	
 	public Pnuematics(){
-		solenoid1[0] = new Solenoid(RobotMap.pnuSolenoids[0]);
-		solenoid1[1] = new Solenoid(RobotMap.pnuSolenoids[1]);
-		solenoid1[0] = new Solenoid(RobotMap.pnuSolenoids[2]);
-		solenoid1[1] = new Solenoid(RobotMap.pnuSolenoids[3]);
+		solenoid1[0] = new Solenoid(RobotMap.pnuSolenoid1[0]);
+		solenoid1[1] = new Solenoid(RobotMap.pnuSolenoid1[1]);
+		solenoid2[0] = new Solenoid(RobotMap.pnuSolenoid2[0]);
+		solenoid2[1] = new Solenoid(RobotMap.pnuSolenoid2[1]);
 		state1 = false;
 		state2 = false;
 	}
 	
-	public void operateSolenoid1(boolean changeState){
-		if(changeState){
+	public void operateSolenoid1(boolean fire){
+		/*if(changeState){
 			if(!state1){
 				while(changeState){
 					solenoid1[0].set(true);
@@ -42,11 +42,19 @@ public class Pnuematics extends Subsystem {
 				state1 = !state1;
 			}
 			
+		}*/
+		if(!fire){
+			solenoid1[0].set(true);
+			solenoid1[1].set(false);
+    	}
+		else{
+			solenoid1[0].set(false);
+			solenoid1[1].set(true);
 		}
 	}
 	
-	public void operateSolenoid2(boolean changeState){
-		if(changeState){
+	public void operateSolenoid2(boolean fire){
+		/*if(changeState){
 			if(!state2){
 				while(changeState){
 					solenoid2[0].set(true);
@@ -61,6 +69,14 @@ public class Pnuematics extends Subsystem {
 				state2 = !state2;
 			}
 			
+		}*/
+		if(!fire){
+			solenoid2[0].set(true);
+			solenoid2[1].set(false);
+    	}
+		else{
+			solenoid2[0].set(false);
+			solenoid2[1].set(true);
 		}
 	}
     public void initDefaultCommand() {

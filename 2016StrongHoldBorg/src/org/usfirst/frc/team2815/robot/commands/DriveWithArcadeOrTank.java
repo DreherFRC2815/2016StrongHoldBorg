@@ -27,6 +27,10 @@ public class DriveWithArcadeOrTank extends Command {
     	Robot.driveTrain.driveToggle(Robot.oi.getAButton(), 
     			Robot.oi.getXButton(), Robot.oi.getLeftYValue(), 
     			Robot.oi.getRightYValue(), Robot.oi.getRightXValue());
+    	
+    	SmartDashboard.putDouble("X Value", Robot.accel.getX());
+    	SmartDashboard.putDouble("Y Value", Robot.accel.getY());
+    	SmartDashboard.putDouble("Z Value", Robot.accel.getZ());
     	SmartDashboard.putBoolean("Tank Drive", DriveTrain.driveTypeTank);
     	SmartDashboard.putBoolean("Arcade Drive", DriveTrain.driveTypeArcade);
     	SmartDashboard.putInt("POV shtuff", Robot.oi.getThePOV());

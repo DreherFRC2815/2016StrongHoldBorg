@@ -14,24 +14,24 @@ public class OI {
 	Joystick flight = new Joystick(1);
 	
 	public double getLeftYValue(){
-		if(Math.abs(xbox.getRawAxis(1))>=.01){
-			return xbox.getRawAxis(1);
+		if(Math.abs(xbox.getRawAxis(1))>=.07){
+			return (-.75*xbox.getRawAxis(1));
 		}
 		else
 			return 0;
 	}
 	
 	public double getRightYValue(){
-		if(Math.abs(xbox.getRawAxis(5))>=.01){
-			return xbox.getRawAxis(5);
+		if(Math.abs(xbox.getRawAxis(5))>=.07){
+			return (-.75*xbox.getRawAxis(5));
 		}
 		else
 			return 0;
 	}
 	
 	public double getRightXValue(){
-		if(Math.abs(xbox.getRawAxis(4))>=.01){
-			return xbox.getRawAxis(4);
+		if(Math.abs(xbox.getRawAxis(4))>=.07){
+			return (-1*xbox.getRawAxis(4));
 		}
 		else
 			return 0;
@@ -42,6 +42,7 @@ public class OI {
 	public boolean getXButton(){
 		return xbox.getRawButton(3);
 	}
+	
 	public double getRightTrigger(){
 		return xbox.getRawAxis(3);
 	}
@@ -51,6 +52,7 @@ public class OI {
 	public int getThePOV(){
 		return xbox.getPOV();
 	}
+	
 	public boolean getFlight1(){
 		return flight.getRawButton(1);
 	}

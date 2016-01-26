@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2815.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team2815.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
@@ -10,6 +11,7 @@ public class OperateSolenoids extends Command {
     public OperateSolenoids() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.pnuem);
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +20,8 @@ public class OperateSolenoids extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.pnuem.operateSolenoid1(Robot.oi.getFlight1());
+    	Robot.pnuem.operateSolenoid2(Robot.oi.getFlight1());
     }
 
     // Make this return true when this Command no longer needs to run execute()

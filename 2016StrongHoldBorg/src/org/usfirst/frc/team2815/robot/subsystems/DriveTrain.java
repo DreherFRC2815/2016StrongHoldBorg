@@ -38,8 +38,8 @@ public class DriveTrain extends Subsystem {
 		driveTypeTank = true;
 	}
 	public void setMotors(double LS, double RS){
-		leftMotors[0].set(LS);
-		leftMotors[1].set(LS);
+		leftMotors[0].set(-LS);
+		leftMotors[1].set(-LS);
 		rightMotors[0].set(RS);
 		rightMotors[1].set(RS);
 		
@@ -57,7 +57,9 @@ public class DriveTrain extends Subsystem {
 			else if(rActual < rSpeed)
 				rActual += ACCL;
 		}
-		setMotors(lActual,rActual);
+		//something went derp so these are switched. It doesn't have much of an effect unless you're
+		//sculling. With (lActual, rActual) you'll scull in reverse.
+		setMotors(rActual,lActual);
 	}
 	public void arcadeDrive(double speed, double turnVal){
 		
