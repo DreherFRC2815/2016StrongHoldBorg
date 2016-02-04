@@ -12,47 +12,48 @@ public class DriveForward extends Command {
 	private boolean state;
 	private final double STARTTIME;
 	private final boolean FINISHED = true;
-	private double drive_Time; //DRIVE_TIME is 2
-    public DriveForward(double time) {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveTrain);
-        drive_Time = time;
-    	STARTTIME = Timer.getMatchTime();
-        //state = BOOTING;
-    }
+	private double drive_Time; // DRIVE_TIME is 2
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	this.setInterruptible(false);
+	public DriveForward(double time) {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.driveTrain);
+		drive_Time = time;
+		STARTTIME = Timer.getMatchTime();
+		// state = BOOTING;
+	}
 
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		this.setInterruptible(false);
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	//if(Timer.getMatchTime()<=(STARTTIME+drive_Time))
-    	//	Robot.driveTrain.setMotors(-.25, -.25);
-    	//else{
-    	//	Robot.driveTrain.setMotors(0, 0);
-    	//	state = FINISHED;
-    		
-    	Robot.driveTrain.setMotors(-.25, -.25);
-    	Timer.delay(drive_Time);
-    	Robot.driveTrain.setMotors(0, 0);
-    	state = FINISHED;
-    	//}
-    }
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	return (state);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		// if(Timer.getMatchTime()<=(STARTTIME+drive_Time))
+		// Robot.driveTrain.setMotors(-.25, -.25);
+		// else{
+		// Robot.driveTrain.setMotors(0, 0);
+		// state = FINISHED;
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+		Robot.driveTrain.setMotors(-.25, -.25);
+		Timer.delay(drive_Time);
+		Robot.driveTrain.setMotors(0, 0);
+		state = FINISHED;
+		// }
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return (state);
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

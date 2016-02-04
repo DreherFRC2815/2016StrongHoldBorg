@@ -1,17 +1,17 @@
 package org.usfirst.frc.team2815.robot.commands;
 
 import org.usfirst.frc.team2815.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ShootEdward extends Command {
+public class OperateClawWithJoyStick extends Command {
 
-	public ShootEdward() {
+	public OperateClawWithJoyStick() {
 		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+		requires(Robot.claw);
 	}
 
 	// Called just before this Command runs the first time
@@ -19,12 +19,8 @@ public class ShootEdward extends Command {
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	@SuppressWarnings("deprecation")
 	protected void execute() {
-		//Robot.fire.(Robot.oi.getFlightY());
-		//(Robot.oi.getFlightY());
-		SmartDashboard.putDouble("Left Trigger", Robot.oi.getLeftTrigger());
-		SmartDashboard.putDouble("Right Trigger", Robot.oi.getRightTrigger());
+		Robot.claw.operateClaw(-1 * Robot.oi.getFlightY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -9,100 +9,105 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveTrain extends Subsystem {
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 	Talon[] leftMotors = new Talon[2];
 	Talon[] rightMotors = new Talon[2];
-	
+
 	static double lTarget;
 	static double rTarget;
 
 	static double lActual;
 	static double rActual;
-	static final double ACCL=.05;
-	//set false to tankDrive, true to arcadeDrive
+	static final double ACCL = .03;
+	// set false to tankDrive, true to arcadeDrive
 	public static boolean driveTypeArcade;
 	public static boolean driveTypeTank;
-	
-	public DriveTrain(){
+
+	public DriveTrain() {
 		leftMotors[0] = new Talon(RobotMap.leftMotors[0]);
 		leftMotors[1] = new Talon(RobotMap.leftMotors[1]);
 		rightMotors[0] = new Talon(RobotMap.rightMotors[0]);
 		rightMotors[1] = new Talon(RobotMap.rightMotors[1]);
-		rTarget = 0; 
+		rTarget = 0;
 		lTarget = 0;
 		lActual = 0;
 		rActual = 0;
 		driveTypeArcade = false;
 		driveTypeTank = true;
 	}
-	public void setMotors(double LS, double RS){
-		leftMotors[0].set(-LS);
-		leftMotors[1].set(-LS);
-		rightMotors[0].set(RS);
-		rightMotors[1].set(RS);
-		
+
+	public void setMotors(double LS, double RS) {
+		leftMotors[0].set(LS);
+		leftMotors[1].set(LS);
+		rightMotors[0].set(-RS);
+		rightMotors[1].set(-RS);
+
 	}
-	public void tankDrive(double lSpeed, double rSpeed){
-		if(lActual != lSpeed){
-			if(lActual > lSpeed)
+
+	public void tankDrive(double lSpeed, double rSpeed) {
+		if (lActual != lSpeed) {
+			if (lActual > lSpeed)
 				lActual -= ACCL;
-			else if(lActual < lSpeed)
+			else if (lActual < lSpeed)
 				lActual += ACCL;
 		}
-		if(rActual != rSpeed){
-			if(rActual > rSpeed)
+		if (rActual != rSpeed) {
+			if (rActual > rSpeed)
 				rActual -= ACCL;
-			else if(rActual < rSpeed)
+			else if (rActual < rSpeed)
 				rActual += ACCL;
 		}
-		//something went derp so these are switched. It doesn't have much of an effect unless you're
-		//sculling. With (lActual, rActual) you'll scull in reverse.
-		setMotors(rActual,lActual);
+		// something went derp so these are switched. It doesn't have much of an
+		// effect unless you're
+		// sculling. With (lActual, rActual) you'll scull in reverse.
+		setMotors(rActual, lActual);
 	}
-	public void arcadeDrive(double speed, double turnVal){
-		
+
+	public void arcadeDrive(double speed, double turnVal) {
+
 		lTarget = speed + turnVal;
-		if(lTarget >= 1)
+		if (lTarget >= 1)
 			lTarget = .99;
 		rTarget = speed - turnVal;
-		if(rTarget >= 1)
+		if (rTarget >= 1)
 			rTarget = .99;
-		if(lTarget != lActual){
-			if(lActual > lTarget)
+		if (lTarget != lActual) {
+			if (lActual > lTarget)
 				lActual -= ACCL;
-			if(lActual < lTarget)
+			if (lActual < lTarget)
 				lActual += ACCL;
 		}
-		if(rTarget != rActual){
-			if(rActual > rTarget)
+		if (rTarget != rActual) {
+			if (rActual > rTarget)
 				rActual -= ACCL;
-			if(rActual < rTarget)
+			if (rActual < rTarget)
 				rActual += ACCL;
 		}
-		setMotors(lActual,rActual);
+		setMotors(lActual, rActual);
 	}
-	public void driveToggle(boolean buttonA, boolean buttonX, double lSpeed, 
-			double rSpeed, double turnValue){
-		if(buttonA){
+
+	public void driveToggle(boolean buttonA, boolean buttonX, double lSpeed,
+			double rSpeed, double turnValue) {
+		if (buttonA) {
 			driveTypeArcade = true;
 			driveTypeTank = false;
 		}
-		if(buttonX){
+		if (buttonX) {
 			driveTypeArcade = false;
 			driveTypeTank = true;
 		}
-		if(driveTypeTank){
+		if (driveTypeTank) {
 			tankDrive(lSpeed, rSpeed);
 		}
-		if(driveTypeArcade){
+		if (driveTypeArcade) {
 			arcadeDrive(lSpeed, turnValue);
 		}
 	}
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
-}
 
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+}

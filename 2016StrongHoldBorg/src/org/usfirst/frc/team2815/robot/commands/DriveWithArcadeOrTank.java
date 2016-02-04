@@ -11,42 +11,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveWithArcadeOrTank extends Command {
 
-    public DriveWithArcadeOrTank() {
-    	requires(Robot.driveTrain);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	public DriveWithArcadeOrTank() {
+		requires(Robot.driveTrain);
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    @SuppressWarnings("deprecation")
+	// Called repeatedly when this Command is scheduled to run
+	@SuppressWarnings("deprecation")
 	protected void execute() {
-    	Robot.driveTrain.driveToggle(Robot.oi.getAButton(), 
-    			Robot.oi.getXButton(), Robot.oi.getLeftYValue(), 
-    			Robot.oi.getRightYValue(), Robot.oi.getRightXValue());
-    	
-    	SmartDashboard.putDouble("X Value", Robot.accel.getX());
-    	SmartDashboard.putDouble("Y Value", Robot.accel.getY());
-    	SmartDashboard.putDouble("Z Value", Robot.accel.getZ());
-    	SmartDashboard.putBoolean("Tank Drive", DriveTrain.driveTypeTank);
-    	SmartDashboard.putBoolean("Arcade Drive", DriveTrain.driveTypeArcade);
-    	SmartDashboard.putInt("POV shtuff", Robot.oi.getThePOV());
-    }
+		Robot.driveTrain.driveToggle(Robot.oi.getAButton(),
+				Robot.oi.getXButton(), Robot.oi.getLeftYValue(),
+				Robot.oi.getRightYValue(), Robot.oi.getRightXValue());
+		if (DriveTrain.driveTypeTank)
+			SmartDashboard.putString("Tank Drive", "Tank Drive");
+		else
+			SmartDashboard.putString("Arcade Drive", "Arcade Drive");
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }
