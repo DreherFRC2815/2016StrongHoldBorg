@@ -24,5 +24,9 @@ public class ScoreFromLowBar extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	addSequential(new DriveForward(7, .25));
+    	addSequential(new TurnRobotRight(2, .4));
+    	addSequential(new DriveForward(3, .25));
+    	addSequential(new EjectBall());
     }
 }

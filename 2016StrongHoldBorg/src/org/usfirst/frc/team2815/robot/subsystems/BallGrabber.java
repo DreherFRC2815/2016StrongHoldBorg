@@ -31,5 +31,9 @@ public class BallGrabber extends Subsystem {
 			setVal = 0;
 		ballpicker.set(setVal);
 	}
+    
+    public void autoBallPick(double val){
+    	ballpicker.set(val);
+    }
 }
 

@@ -80,6 +80,7 @@ public class Robot extends IterativeRobot {
 		autoCommand.addObject("Ramparts", new RampartDrive());
 		autoCommand.addObject("Wall", new RockWallDrive());
 		autoCommand.addObject("Rocky Terrain", new TerrainDrive());
+		autoCommand.addObject("Score from low bar", new ScoreFromLowBar());
 		SmartDashboard.putData("Auto mode", autoCommand);
 
 	}
