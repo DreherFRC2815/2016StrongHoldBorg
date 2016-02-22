@@ -13,12 +13,13 @@ public class DriveForward extends Command {
 	private final double STARTTIME;
 	private final boolean FINISHED = true;
 	private double drive_Time; // DRIVE_TIME is 2
-
-	public DriveForward(double time) {
+	private double speed;
+	public DriveForward(double time, double speed) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrain);
 		drive_Time = time;
 		STARTTIME = Timer.getMatchTime();
+		this.speed = speed;
 		// state = BOOTING;
 	}
 
@@ -36,7 +37,7 @@ public class DriveForward extends Command {
 		// Robot.driveTrain.setMotors(0, 0);
 		// state = FINISHED;
 
-		Robot.driveTrain.setMotors(-.25, -.25);
+		Robot.driveTrain.setMotors(speed, speed);
 		Timer.delay(drive_Time);
 		Robot.driveTrain.setMotors(0, 0);
 		state = FINISHED;

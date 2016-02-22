@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2815.robot;
 
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,14 +8,13 @@ import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team2815.robot.autocommands.LowBarDrive;
+import org.usfirst.frc.team2815.robot.autocommands.*;
+import org.usfirst.frc.team2815.robot.commands.BallPicker;
 import org.usfirst.frc.team2815.robot.commands.DriveWithArcadeOrTank;
 import org.usfirst.frc.team2815.robot.commands.OperateClawWithJoyStick;
-import org.usfirst.frc.team2815.robot.commands.OperateSolenoids;
-import org.usfirst.frc.team2815.robot.commands.ShootEdward;
 import org.usfirst.frc.team2815.robot.commands.TankDriveWithJoystick;
+import org.usfirst.frc.team2815.robot.subsystems.BallGrabber;
 import org.usfirst.frc.team2815.robot.subsystems.DriveTrain;
-//import org.usfirst.frc.team2815.robot.subsystems.EdShooter;
-import org.usfirst.frc.team2815.robot.subsystems.Pnuematics;
 import org.usfirst.frc.team2815.robot.subsystems.TheClaw;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -35,22 +33,19 @@ public class Robot extends IterativeRobot {
 
 	// -----subsystem declaration
 	public static DriveTrain driveTrain;
-	//public static EdShooter shoot;
-	public static Pnuematics pnuem;
 	public static TheClaw claw;
-
+	public static BallGrabber ballGrabber;
+	
 	// -----command declaration
 	Command autonomousCommand;
 	// Command tankDrive;
 	Command togDrive;
 	Command operateClawWithJoyStick;
-	Command fire;
-	Command pistons;
-
+	Command ballPickerCom;
+	
 	// -----Miscellaneous
 	public static Accelerometer accel;
-	SendableChooser chooser;
-	// SendableChooser toggDriveChooser;
+	SendableChooser autoCommand;
 	CameraServer server;
 
 	/**
@@ -59,34 +54,33 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		oi = new OI();
-
+		autoCommand = new SendableChooser();
+		
 		// -----subsystem instantiation
 		driveTrain = new DriveTrain();
 		claw = new TheClaw();
-		//shoot = new EdShooter();
-		pnuem = new Pnuematics();
-
+		ballGrabber = new BallGrabber();
+		
 		// -----command instantiation
 		// tankDrive = new TankDriveWithJoystick();
 		togDrive = new DriveWithArcadeOrTank();
 		operateClawWithJoyStick = new OperateClawWithJoyStick();
-		//fire = new ShootEdward();
-		autonomousCommand = new LowBarDrive();
-		pistons = new OperateSolenoids();
-		// chooser = new SendableChooser();
-
+		ballPickerCom = new BallPicker();
+		
 		// -----Camera
-		// server = CameraServer.getInstance();
-		// server.setQuality(30);
+		server = CameraServer.getInstance();
+		server.setQuality(30);
 		// the camera name (ex "cam0") can be found through the roborio web
 		// interface
-		// server.startAutomaticCapture("cam0");
+		server.startAutomaticCapture("cam0");
 
 		// -----Miscellaneous
-		accel = new BuiltInAccelerometer(Accelerometer.Range.k4G);
-		// chooser.addDefault("Default Auto", new LowBarDrive());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		// SmartDashboard.putData("Auto mode", chooser);
+		autoCommand.addDefault("Low Bar", new LowBarDrive());
+		autoCommand.addObject("Moat", new MoatDrive());
+		autoCommand.addObject("Ramparts", new RampartDrive());
+		autoCommand.addObject("Wall", new RockWallDrive());
+		autoCommand.addObject("Rocky Terrain", new TerrainDrive());
+		SmartDashboard.putData("Auto mode", autoCommand);
 
 	}
 
@@ -115,14 +109,9 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		// autonomousCommand = new LowBarDrive();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new LowBarDrive(); break; case "Default Auto": default:
-		 * autonomousCommand = new LowBarDrive(); break; }
-		 */
+		
+		autonomousCommand = (Command) autoCommand.getSelected();
+		autonomousCommand.start();
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
@@ -144,10 +133,9 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 
 		// tankDrive.start();
-		//togDrive.start();
+		togDrive.start();
 		operateClawWithJoyStick.start();
-		pistons.start();
-		//fire.start();
+		ballPickerCom.start();
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -158,7 +146,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-
+		
 		Scheduler.getInstance().run();
 	}
 

@@ -19,10 +19,7 @@ public class RobotMap {
 	public static int[] leftMotors = { 0, 1 };
 	public static int[] rightMotors = { 2, 3 };
 
-	public static int[] shooterMotors = { 6, 7 };
-
-	public static int[] pnuSolenoid1 = { 0, 1 };
-	public static int[] pnuSolenoid2 = { 2, 3 };
-
 	public static int[] clawVictor = { 4, 5 };
+	
+	public static int ballpick = 6; 
 }

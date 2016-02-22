@@ -14,7 +14,7 @@ public class TheClaw extends Subsystem {
 	// here. Call these from Commands.
 	Victor claw1;
 	Victor claw2;
-
+	double setVal;
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -23,10 +23,12 @@ public class TheClaw extends Subsystem {
 	public TheClaw() {
 		claw1 = new Victor(RobotMap.clawVictor[0]);
 		claw2 = new Victor(RobotMap.clawVictor[1]);
+		setVal = 0;
 	}
 
 	public void operateClaw(double value) {
-		claw1.set(-1*value);
-		claw2.set(value);
+		setVal = value;
+		claw1.set(setVal);
+		claw2.set(setVal);
 	}
 }

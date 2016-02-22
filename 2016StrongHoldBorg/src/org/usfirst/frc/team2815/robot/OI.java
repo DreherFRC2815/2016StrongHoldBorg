@@ -12,14 +12,14 @@ public class OI {
 	Joystick flight = new Joystick(1);
 
 	public double getLeftYValue() {
-		if (Math.abs(xbox.getRawAxis(1)) >= .1) {
+		if (Math.abs(xbox.getRawAxis(1)) >= .05) {
 			return (-1 * xbox.getRawAxis(1));
 		} else
 			return 0;
 	}
 
 	public double getRightYValue() {
-		if (Math.abs(xbox.getRawAxis(5)) >= .1) {
+		if (Math.abs(xbox.getRawAxis(5)) >= .05) {
 			return (-1 * xbox.getRawAxis(5));
 		} else
 			return 0;
@@ -69,7 +69,7 @@ public class OI {
 	}
 
 	public double getFlightY() {
-		return .5*flight.getRawAxis(1);
+		return flight.getRawAxis(1);
 	}
 	// // CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a

@@ -20,7 +20,7 @@ public class DriveTrain extends Subsystem {
 
 	static double lActual;
 	static double rActual;
-	static final double ACCL = .03;
+	static final double ACCL = .037;
 	// set false to tankDrive, true to arcadeDrive
 	public static boolean driveTypeArcade;
 	public static boolean driveTypeTank;
@@ -34,8 +34,8 @@ public class DriveTrain extends Subsystem {
 		lTarget = 0;
 		lActual = 0;
 		rActual = 0;
-		driveTypeArcade = false;
-		driveTypeTank = true;
+		driveTypeArcade = true;
+		driveTypeTank = false;
 	}
 
 	public void setMotors(double LS, double RS) {
